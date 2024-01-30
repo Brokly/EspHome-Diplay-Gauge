@@ -78,3 +78,7 @@ on_...:
       id(test_gauge2_id).set_level(koef);
       id(test_gauge2_id).repaint(); // принудительная отрисовка градусника
 ```
+
+
+https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/361e95d7-70fe-4103-83b6-468b08ad0fea
+
