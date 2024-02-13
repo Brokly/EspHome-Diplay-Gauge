@@ -28,7 +28,7 @@ output:
     end_angle: 250           # конечный угол (конец градусника)  в градусах от 0 до 359, (не обязательный, по умолчанию: 340), признак градусник в форме спидометра, не совместимо с "width"
     size: 11                 # толщина градусника (не обязательный, по умолчанию: 16)
     radius: 54               # радиус градусника-спидометра (не обязательный, по умолчанию: 50), признак градусника в форме спидометра, не совместимо с "width"
-    #width: 100              # признак плоского градусника, она же ширина, не совместимо с "radius" и "end_angle"
+    width: 100              # признак плоского градусника, она же ширина, не совместимо с "radius" и "end_angle"
     center_x: 64             # координата X центра дуги градусника (обязательный)
     center_y: 100            # координата Y центра дуги градусника (обязательный)
   # цвета
@@ -43,11 +43,10 @@ output:
     style_soft: true         # стиль, при TRUE торцы градусника закруглены (не обязательный) (по умолчанию: true)
     auto_refresh: true       # включает отрисовку при установке нового значения показаний (не обязательный) (по умолчанию: true)
     mirroring: false         # изменяет направление заполнения градусника с "по часовой стрелке" на "против часовой стрелки" (по умолчанию: false)
-  # указатель
-    knob_width: 10           # ширина прямоугольного указателя
-    #knob_height: 24         # высота прямоугольного указателя
-    #khob_soft: true         # стиль прямоугольного указателя, с закругленными краями
-    #knob_radius: 8          # радиус круглого указателя
+  # указатель (по умолчанию - круглый)
+    knob_size: 24            # радиус круглого указателя или высота прямоугольного указателя (не обязательный)
+    knob_width: 10           # ширина прямоугольного указателя, оно же признак квадратного указателя (не обязательный)
+    khob_soft: true          # стиль прямоугольного указателя, с закругленными краями он же признак квадратного указателя (не обязательный)
 ```
 
 ### Использование в стиле конфига yaml: 
@@ -160,12 +159,93 @@ on_...:
 ```
 ![image](https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/3c4e3a31-128e-4eb4-990c-06102189cead)
 
+```yaml
+    start_angle: 0 
+    size: 11
+    width: 100
+    center_x: 64
+    center_y: 80
+    color: my_red
+    bkg_color: my_light_gray
+    border_color: my_gray
+    3d_color: my_white
+    style_soft: true
+    knob_size: 16 
+    knob_width: 10
+    khob_soft: true
+```
+![image](https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/e7335ae0-61b5-40c9-a6b0-fff8d4a0374f)
 
+```yaml
+    start_angle: 45 
+    size: 11
+    width: 100
+    center_x: 64
+    center_y: 80
+    color: my_red
+    max_color: my_blue 
+    half_color: my_green 
+    bkg_color: my_light_gray
+    border_color: my_gray
+    3d_color: my_white
+    style_soft: true
+    mirroring: true
+    knob_size: 16 
+    knob_width: 10
+    khob_soft: true
+```
+![image](https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/9647a4a7-17a9-40f4-b944-f7296ff18972)![image](https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/a5397b78-05f8-47cb-84d5-715a551e338b)![image](https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/3ce32a63-3d7b-4d87-b9cf-b53788578a6d)
 
+```yaml
+    start_angle: 290 
+    end_angle: 250
+    size: 6
+    center_x: 64
+    center_y: 64
+    color: my_red
+    max_color: my_blue 
+    half_color: my_green 
+    bkg_color: my_light_gray
+    border_color: my_gray
+    3d_color: my_white
+    fill_color: my_light_gray
+    style_soft: true
+    knob_size: 7
+```
+![image](https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/15d80204-a549-401e-848c-ca9810bae724)
 
+```yaml
+    start_angle: 290 
+    end_angle: 250
+    size: 16
+    center_x: 64
+    center_y: 64
+    color: my_yellow
+    bkg_color: my_blue
+    border_color: my_gray
+    3d_color: my_white
+    fill_color: my_red
+    style_soft: true
+    knob_size: 7 
+```
+![image](https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/228915b1-ac65-4aa9-83db-f0961471ef9d)
 
-
+```yaml
+    start_angle: 290 
+    end_angle: 250
+    size: 16
+    center_x: 64
+    center_y: 64
+    color: my_green
+    bkg_color: my_blue
+    fill_color: my_red
+    style_soft: true
+    knob_size: 8 
+```
+![image](https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/180cdde1-168c-4351-a1a9-ae585c496674)
 
 
 https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/361e95d7-70fe-4103-83b6-468b08ad0fea
+
+https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/1aa98090-4276-42a0-a4c9-082c091b2cf8
 
