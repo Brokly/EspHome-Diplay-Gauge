@@ -30,6 +30,8 @@ class DisplayGauge : public output::FloatOutput, public Component {
   void set_width(uint32_t width){this->width_=width; this->circle_=false;} 
   // высота градусника
   void set_height(uint32_t height){this->height_=height;} 
+  // высота градусника
+  void set_radius(uint32_t radius){this->radius_=radius; this->circle_=true;} 
   // размер ползунка
   void set_knob(uint16_t size){this->knob_=size;}
   void set_knob_width(uint16_t size){this->knob_width_=size; this->knob_circle_=false;}
@@ -78,7 +80,7 @@ class DisplayGauge : public output::FloatOutput, public Component {
   void set_mirroring(bool val){this->mirror_=val;}
   
   void setup() override {
-      if(this->ang0_>=360) { // установка деолтных параметров зависящих от типа градусника
+      if(this->ang0_>=360) { // установка дефолтных параметров зависящих от типа градусника
          if(this->circle_){
            this->ang0_=DEF_RAD_ANGLE_START;
          } else {             
@@ -257,10 +259,12 @@ class DisplayGauge : public output::FloatOutput, public Component {
            }
         }
 
+        //ang %=360;
         // РИСУЕМ УКАЗАТЕЛЬ
         if(this->knob_!=0){ // в стиле , с указателем
            if(this->circle_){ // указатель на кривом градуснике
               coord(this->radius_, ang, &dx, &dy); //вычисление координат указателя для спидометра
+              ESP_LOGE("","%u",ang);
               ang=360+90-ang;
            } else { //указатель на прямом градуснике
               if(this->mirror_){
@@ -291,7 +295,7 @@ class DisplayGauge : public output::FloatOutput, public Component {
               get_rect_angle(this->knob_width_, this->knob_ , ang , &x0, &y0, &x1, &y1, &x2, &y2, &x3, &y3);// пересчет координат с учетом угла поворота
               ang=(360+180-ang)%360; //пересчет угла в координаты рисования прямоугольников
               rect(dx, dy, x0, y0, x1, y1, x2, y2, x3, y3, this->knob_width_, ang, knobcol, this->knob_soft_, true); //тело движка
-              if(knobcol!=this->colbord_){ // если нужен бордюр
+              if(this->borderAlterColor_){ // если нужен бордюр
                  if(this->alter3dColor_){ // если нужен дополнительный 3D бордюр
                     rect(dx-1, dy-1, x0, y0, x1, y1, x2, y2, x3, y3, this->knob_width_, ang, this->color3d_, this->knob_soft_, false); // бордюр 3D
                  }                    
@@ -328,8 +332,8 @@ class DisplayGauge : public output::FloatOutput, public Component {
   uint16_t height_=DEF_HEIGHT; // высота градусника
   uint16_t width_=DEF_WIDTH; // ширина градусника для стандартного вида
   uint16_t radius_=DEF_RADIUS; // радиус градусника
-  uint16_t ang100_=DEF_RAD_ANGLE_END; // углы раскрытия
-  uint16_t ang0_=360; 
+  int16_t ang100_=DEF_RAD_ANGLE_END; // углы раскрытия
+  int16_t ang0_=360; 
   float val_=0.0; //значение показаний oт 0 до 1
   Color col0_={255,255,255}; // стартовый цвет
   bool colset50_=false; // признак установки промежуточного
@@ -354,12 +358,12 @@ class DisplayGauge : public output::FloatOutput, public Component {
   
   
     //функция определения осьмушки, к которой принадлежит угол    
-    uint8_t octant(uint16_t angle){
+    uint8_t octant(int16_t angle){
       return (angle%360)/45;
     }
 
     //процедура определения координат точки дуги по углу
-    void coord(uint16_t radius, uint16_t angle, int32_t* x, int32_t* y){
+    void coord(uint16_t radius, int16_t angle, int32_t* x, int32_t* y){
       angle %=360;
       float ang = (PI * angle )/180.0; //преобразование градусов в радианы
       *y=(int32_t)(round(cos(ang)*radius));
@@ -372,7 +376,7 @@ class DisplayGauge : public output::FloatOutput, public Component {
     }
     
     // рассчет угла к точке лежащей на окружности
-    uint16_t getAngle(int32_t xc, int32_t yc, int32_t x, int32_t y , float r){
+    int16_t getAngle(int32_t xc, int32_t yc, int32_t x, int32_t y , float r){
        if(r<=0){
           return 0;
        }
@@ -625,7 +629,7 @@ class DisplayGauge : public output::FloatOutput, public Component {
          // рисование торцов
          int32_t xa; int32_t ya;
          int32_t xb; int32_t yb;
-        coord(r, a, &xa, &ya);
+         coord(r, a, &xa, &ya);
          coord(++rb, a, &xb, &yb);
          if(soft){  //рисуем закругленый торец начала
             bres_arc(xc+((xa+xb)/2), yc+((ya+yb)/2), size2, a+180, a, color, 1, fill);
@@ -654,7 +658,7 @@ class DisplayGauge : public output::FloatOutput, public Component {
    //soft - признак закругления торцов
    //fill - признак заливки
    #define PIX4 // способ рисования линии 4x связные или 8и связные
-   void HOT rect(int32_t xc, int32_t yc, int32_t x0, int32_t y0, int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, uint16_t height, uint16_t ang, Color color, bool soft=false, bool fill=false){
+   void HOT rect(int32_t xc, int32_t yc, int32_t x0, int32_t y0, int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, uint16_t height, int16_t ang, Color color, bool soft=false, bool fill=false){
       const int32_t dx = abs(x0 - x1); 
       int32_t dy = abs(y0 - y1);
       const int8_t sy = y1 < y0 ? 1 : -1;
@@ -725,7 +729,7 @@ class DisplayGauge : public output::FloatOutput, public Component {
    //width - ширина прямоугольника
    //angle - угол поворота
    //x0,y0...x3,y3 - рассчитанные координаты прямоугольника для рисования
-   void get_rect_angle(int32_t height, int32_t width, uint16_t angle, int32_t* x0, int32_t* y0,
+   void get_rect_angle(int32_t height, int32_t width, int16_t angle, int32_t* x0, int32_t* y0,
                        int32_t* x1, int32_t* y1,  int32_t* x2, int32_t* y2, int32_t* x3, int32_t* y3){
       angle %=360;
       // рассчет координат по углу
@@ -789,7 +793,7 @@ class DisplayGauge : public output::FloatOutput, public Component {
    // col - цвет
    // fill - заполнение
 /*
-   void rect_knob(int32_t xc, int32_t yc, uint16_t height, uint16_t width,  uint16_t ang, Color col, Color colBord, bool soft=false){
+   void rect_knob(int32_t xc, int32_t yc, uint16_t height, uint16_t width,  int16_t ang, Color col, Color colBord, bool soft=false){
       int32_t x0; int32_t y0;
       int32_t x1; int32_t y1;
       int32_t x2; int32_t y2;
