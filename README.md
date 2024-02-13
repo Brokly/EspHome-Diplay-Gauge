@@ -244,6 +244,55 @@ on_...:
 ```
 ![image](https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/180cdde1-168c-4351-a1a9-ae585c496674)
 
+### Цвета используемые в примерах
+```yaml
+color:
+  - id: my_red
+    red: 100%
+    green: 0%
+    blue: 0%
+  - id: my_yellow
+    red: 100%
+    green: 100%
+    blue: 0%
+  - id: my_green
+    red: 0%
+    green: 100%
+    blue: 0%
+  - id: my_blue
+    red: 0%
+    green: 0%
+    blue: 100%
+  - id: my_white
+    red: 100%
+    green: 100%
+    blue: 100%
+  - id: my_magenta
+    red: 100%
+    green: 0%
+    blue: 100%
+  - id: my_gray
+    red: 70%
+    green: 70%
+    blue: 70%
+  - id: my_light_gray
+    red: 85%
+    green: 85%
+    blue: 70%
+  - id: my_black
+    red: 0%
+    green: 0%
+    blue: 0%  
+  - id: my_light_blue
+    red: 0%
+    green: 0%
+    blue: 80%  
+  - id: my_light_green
+    red: 0%
+    green: 70%
+    blue: 0%
+```
+
 ### Демонстрационные видео
 
 https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/361e95d7-70fe-4103-83b6-468b08ad0fea
