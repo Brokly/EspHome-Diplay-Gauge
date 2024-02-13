@@ -244,6 +244,7 @@ on_...:
 ```
 ![image](https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/180cdde1-168c-4351-a1a9-ae585c496674)
 
+### Демонстрационные видео
 
 https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/361e95d7-70fe-4103-83b6-468b08ad0fea
 
