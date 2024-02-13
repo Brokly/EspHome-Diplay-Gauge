@@ -299,3 +299,5 @@ https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/361e95d7-70fe-410
 
 https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/1aa98090-4276-42a0-a4c9-082c091b2cf8
 
+https://github.com/Brokly/EspHome-Diplay-Gauge/assets/11642286/fea45b15-99e5-44e9-a232-3dd97d80b40d
+
